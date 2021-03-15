@@ -1,0 +1,20 @@
+{
+  "name": "noteapis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/jokerphuongnam/NoteAPIs#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-app": "^0.0.1",
+    "firebaseui": "^4.8.0",
+    "multer": "^1.4.2",
+    "promise": "^8.1.0"
+  }
+}
