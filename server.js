@@ -22,7 +22,7 @@ app.use(express.static('database'))
 // lien ket router dieu huong
 app.use('/', require('./routerAPIs/noteRouterAPIs'))
 app.use('/', require('./routerAPIs/userRouterAPIs'))
-app.use('/', require('./RouterAPIs/mediaRouterAPIs'))
+app.use('/', require('./routerAPIs/mediaRouterAPIs'))
 
 // chay server
 app.listen(process.env.PORT || 5000, () => { // port 500 dung de test , port con lai dung chay heroku
