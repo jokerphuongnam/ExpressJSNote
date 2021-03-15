@@ -12,6 +12,7 @@
   "homepage": "https://github.com/jokerphuongnam/NoteAPIs#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase": "^8.3.0",
     "firebase-app": "^0.0.1",
     "firebaseui": "^4.8.0",
     "multer": "^1.4.2",
