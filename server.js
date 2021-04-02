@@ -25,6 +25,6 @@ app.use('/', require('./routerAPIs/userRouterAPIs'))
 app.use('/', require('./routerAPIs/mediaRouterAPIs'))
 
 // chay server
-app.listen(process.env.PORT || 5000, () => { // port 500 dung de test , port con lai dung chay heroku
+app.listen(process.env.PORT || 3000, (err) => { // port 500 dung de test , port con lai dung chay heroku
     console.log('Server running')
 }) 
