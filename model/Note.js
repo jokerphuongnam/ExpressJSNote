@@ -1,6 +1,6 @@
 class Note {
 
-    constructor(nid, title, isFavorite, detail, tags, tasks, images,sounds, noiticeTimes) {
+    constructor(nid, title, isFavorite, detail, tags, tasks, images,sounds, noticeTimes) {
         this.nid = nid
         this.title = title
         this.isFavorite = isFavorite
@@ -9,7 +9,7 @@ class Note {
         this.tasks = tasks
         this.images = images
         this.sounds = sounds
-        this.noiticeTimes = noiticeTimes
+        this.noticeTimes = noticeTimes
     }
 
     set appendImage(imageLink) {

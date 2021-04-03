@@ -50,7 +50,7 @@ router.post('/insert', types, (req, res) => {
         Utils.tasks(body.tasks),
         noteRepository.saveImages(req.files.images),
         noteRepository.saveSounds(req.files.sounds),
-        Utils.parseArray(body.noiticeTimes)
+        Utils.parseArray(body.noticeTimes)
     )).then(note => {
         res.json(note)
         noteRepository.incNid()
@@ -71,7 +71,7 @@ router.put('/update', types, (req, res) => {
         Utils.tasks(body.tasks),
         noteRepository.saveImages(req.files.images, req.body.images),
         noteRepository.saveSounds(req.files.sounds, req.body.sounds),
-        Utils.parseArray(body.noiticeTimes)
+        Utils.parseArray(body.noticeTimes)
     )).then(note => {
         res.json(note)
     }).catch(errMsg => {
