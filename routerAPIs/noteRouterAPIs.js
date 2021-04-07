@@ -100,4 +100,13 @@ router.get('/notes', (req, res) => {
     })
 })
 
+router.get('/nodecount',(req, res) => {
+    const query = req.query
+    noteRepository.notes(query.uid).then(notes => {
+        res.json(Object.getOwnPropertyNames(notes).length)
+    }).catch(errMsg => {
+        res.sendStatus(404)
+    })
+})
+
 module.exports = router // xuat router ra cho server
