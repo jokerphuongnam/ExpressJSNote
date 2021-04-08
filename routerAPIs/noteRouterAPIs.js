@@ -105,7 +105,7 @@ router.get('/nodecount',(req, res) => {
     noteRepository.notes(query.uid).then(notes => {
         res.json(Object.getOwnPropertyNames(notes).length)
     }).catch(errMsg => {
-        res.sendStatus(404)
+        res.json(0)
     })
 })
 
