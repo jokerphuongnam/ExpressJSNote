@@ -11,7 +11,7 @@ function sendToClient(user) {
         fname: user.fname,
         lname: user.lname,
         avatar: user.avatar,
-        birthDay: birthDay
+        birthDay: user.birthDay
     }
 }
 
@@ -132,7 +132,12 @@ class DefaultUserRepository {
             }
             firebaseUtils.registration(username, password, type).then((token) => {
                 fs.readFile(dir, (err, data) => {
-                    const users = JSON.parse(`${data}`)
+                    var users = {}
+                    try {
+                        users = JSON.parse(`${data}`)
+                    } catch (error) {
+                        users = {}
+                    }
                     if (token) {
                         const uid = new Date().getTime()
                         users[`${uid}`] = {
