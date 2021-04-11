@@ -157,7 +157,7 @@ class DefaultUserRepository {
                     }
                 })
             }).catch((err) => {
-                reject(err)
+                reject(409)
             })
         })
     }
