@@ -86,12 +86,12 @@ class DefaultUserRepository {
                             if (user) {
                                 resolve(sendToClient(user))
                             } else {
-                                resolve({})
+                                resolve(404)
                             }
                         }
                     })
                 }).catch((err) => {
-                    reject(err)
+                    resolve(404)
                 })
         })
     }
