@@ -55,7 +55,7 @@ router.post('/insert', types, (req, res) => {
         res.json(note)
         noteRepository.incNid()
     }).catch(errMsg => {
-        res.status(500).json(errMsg)
+        res.status( ).json(errMsg)
     })
 })
 
@@ -82,12 +82,11 @@ router.put('/update', types, (req, res) => {
 router.delete('/delete/:uid/:nid', (req, res) => {
     const uid = req.params.uid
     const nid = req.params.nid
-    console.log(req.body)
     res.setHeader('Content-Type', 'application/json')
     noteRepository.deleteNote(Number(uid), Number(nid)).then(note => {
         res.json(note)
     }).catch(errMsg => {
-        res.status(500).json(errMsg)
+        res.sendStatus(404)
     })
 })
 

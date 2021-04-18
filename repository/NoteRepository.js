@@ -37,14 +37,22 @@ function deleteSound(soundName) {
     })
 }
 
+// function openFolder(nid){
+//     let dir = `${path.dirname(__dirname)}/database/${nid}.json`
+//     if (!fs.existsSync(dir)) {
+//         fs.mkdirSync(dir, { recursive: true })
+//     }
+// }
+
 class DefaultNoteRepository {
     insertNote(uid, note) {
         return new Promise(function (resolve, reject) {
             const root = `./database/notes/`
             const dir = `${root}${uid}.json`
+            console.log(dir)
             if (!fs.existsSync(dir)) {
                 fs.mkdirSync(root, { recursive: true })
-                fs.writeFile(dir, JSON.stringify({}), (err)=>{
+                fs.writeFile(dir, JSON.stringify({}), (err) => {
 
                 })
             }
@@ -106,8 +114,8 @@ class DefaultNoteRepository {
 
     deleteNote(uid, nid) {
         return new Promise(function (resolve, reject) {
-            const link = `./database/notes/${uid}.json`
-            fs.readFile(link, (err, data) => {
+            const dir = `./database/notes/${uid}.json`
+            fs.readFile(dir, (err, data) => {
                 if (err) {
                     console.log(err)
                     reject(err)
@@ -126,10 +134,11 @@ class DefaultNoteRepository {
                                 deleteSound(note.sounds[i])
                             }
                         }
-                        resolve(delete notes[nid])
-                        fs.writeFile(link, JSON.stringify(notes), (err => {
+                        resolve(notes[nid])
+                        delete notes[nid]
+                        fs.writeFile(dir, JSON.stringify(notes), err => {
                             reject(err)
-                        }))
+                        })
                     } else {
                         reject(404)
                     }
@@ -162,9 +171,13 @@ class DefaultNoteRepository {
                             }
                             data = newData
                         }
-                        resolve(data)
+                        let array = []
+                        for (const [key, value] of Object.entries(data)) {
+                            array.push(value)
+                        }
+                        resolve(array)
                     } else {
-                        resolve({})
+                        resolve([])
                     }
                 }
             })
@@ -172,6 +185,7 @@ class DefaultNoteRepository {
     }
 
     saveImages(images, imagesLink) {
+        images = images ? images : []
         const urlImages = imagesLink ? JSON.parse(imagesLink) : []
         for (var i = 0; i < images.length; i++) {
             urlImages.push(path.basename(images[i].filename))
@@ -180,6 +194,7 @@ class DefaultNoteRepository {
     }
 
     saveSounds(sounds, soundsLink) {
+        sounds = sounds ? sounds : []
         const urlSounds = soundsLink ? JSON.parse(soundsLink) : []
         for (var i = 0; i < sounds.length; i++) {
             urlSounds.push(path.basename(sounds[i].filename))

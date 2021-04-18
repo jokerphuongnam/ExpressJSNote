@@ -16,8 +16,11 @@ exports.Utils = class Utils {
     }
 
     static parseArray(data) {
-        if (data == undefined || data == null) return []
-        return JSON.parse(data)
+        if (data) {
+            data = JSON.parse(data)
+            return data ? data : []
+        }
+        return []
     }
 
     static tasks(data) {
