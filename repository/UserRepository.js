@@ -49,9 +49,9 @@ class DefaultUserRepository {
         return new Promise((resolve, reject) => {
             firebaseUtils.addtoken(username, password, type).then((token) => {
                 fs.readFile('./database/users.json', (err, data) => {
-                    if(err){
+                    if (err) {
                         reject(404)
-                    }else{
+                    } else {
                         const users = JSON.parse(`${data}`)
                         if (token) {
                             const tokens = users[`${uid}`].tokens
@@ -100,18 +100,23 @@ class DefaultUserRepository {
         return firebaseUtils.forgotPassword(username)
     }
 
-    editProfile(uid, avatar, firstName, lastName, birthDay) {
+    editProfile(uid, avatar, isDontChangeAvatar , firstName, lastName, birthDay) {
         return new Promise((resolve, reject) => {
             fs.readFile('./database/users.json', (err, data) => {
                 const users = JSON.parse(`${data}`)
                 const curentUser = users[`${uid}`]
-                if (avatar) {
-                    deleteImage(users[`${uid}`].avatar)
-                    users[`${uid}`].avatar = avatar
+                if(isDontChangeAvatar){
+                    if (avatar) {
+                        deleteImage(users[`${uid}`].avatar)
+                        users[`${uid}`].avatar = avatar
+                    }
                 }
-                users[`${uid}`].fname = (firstName) ? firstName : curentUser.fname
-                users[`${uid}`].lname = (lastName) ? lastName : curentUser.lname
-                users[`${uid}`].birthDay = (birthDay) ? birthDay : curentUser.birthDay
+                const user  = users[`${uid}`]
+                user.fname = (firstName) ? firstName : curentUser.fname
+                user.lname = (lastName) ? lastName : curentUser.lname
+                user.birthDay = Number((birthDay) ? birthDay : curentUser.birthDay)
+                users[`${uid}`] = user
+                console.log(users[`${uid}`])
                 fs.writeFile('./database/users.json', JSON.stringify(users), (err) => {
                     reject(409)
                 })
@@ -144,7 +149,7 @@ class DefaultUserRepository {
                             uid: uid,
                             fname: firstName,
                             lname: lastName,
-                            birthDay: birthDay,
+                            birthDay: Number(birthDay),
                             avatar: avatar,
                             tokens: [token]
                         }

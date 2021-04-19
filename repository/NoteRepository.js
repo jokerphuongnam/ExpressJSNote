@@ -62,9 +62,12 @@ class DefaultNoteRepository {
                     reject(err)
                 }
                 else {
-                    const notes = JSON.parse(data)
+                    var notes = JSON.parse(data)
                     notes[`${note.nid}`] = note
                     resolve(note)
+                    notes = Object.fromEntries(
+                        Object.entries(notes).sort(([, a], [, b]) => a.nid - b.nid)
+                    )
                     fs.writeFile(dir, JSON.stringify(notes), err => {
                         reject(err)
                     })
@@ -82,7 +85,7 @@ class DefaultNoteRepository {
                     reject(err)
                 }
                 else {
-                    const notes = JSON.parse(data)
+                    var notes = JSON.parse(data)
                     const oldNote = notes[note.nid]
                     if (oldNote) {
                         if (oldNote.images) {
@@ -100,6 +103,9 @@ class DefaultNoteRepository {
                             }
                         }
                         notes[`${note.nid}`] = note
+                        notes = Object.fromEntries(
+                            Object.entries(notes).sort(([, a], [, b]) => a.nid - b.nid)
+                        )
                         resolve(note)
                         fs.writeFile(dir, JSON.stringify(notes), err => {
                             reject(err)
@@ -121,7 +127,7 @@ class DefaultNoteRepository {
                     reject(err)
                 }
                 else {
-                    const notes = JSON.parse(data)
+                    var notes = JSON.parse(data)
                     const note = notes[nid]
                     if (note) {
                         if (note.images) {
@@ -136,6 +142,9 @@ class DefaultNoteRepository {
                         }
                         resolve(notes[nid])
                         delete notes[nid]
+                        notes  = Object.fromEntries(
+                            Object.entries(notes).sort(([,a],[,b]) => a.nid-b.nid)
+                        )
                         fs.writeFile(dir, JSON.stringify(notes), err => {
                             reject(err)
                         })

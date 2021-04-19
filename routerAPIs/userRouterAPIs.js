@@ -55,7 +55,7 @@ router.post('/register', type, (req, res) => {
         body.username,
         body.password,
         body.type,
-        (body.avatar)? body.avatar : (req.file) ? req.file.filename : undefined,
+        (req.file) ? req.file.filename : undefined,
         body.fname,
         body.lname,
         body.birthDay
@@ -70,7 +70,8 @@ router.put('/editprofile', type, (req, res) => {
     const body = req.body
     userRepository.editProfile(
         body.uid,
-        (body.avatar)? body.avatar : (req.file) ? req.file.filename : undefined,
+        (body.avatar) ? body.avatar : (req.file) ? req.file.filename : undefined,
+        (body.avatar!= null || body.avatar != undefined) && (req.file != null || req.file != undefined),
         body.fname,
         body.lname,
         body.birthDay
@@ -94,12 +95,12 @@ router.put('/changepassword', upload, (req, res) => {
     })
 })
 
-router.put('/forgotpassword', upload, (req, res)=>{
+router.put('/forgotpassword', upload, (req, res) => {
     const body = req.body
     userRepository.forgotPassword(body.username)
-        .then((code)=> {
+        .then((code) => {
             res.sendStatus(code)
-        }).catch((err)=>{
+        }).catch((err) => {
             res.sendStatus(err)
         })
 })

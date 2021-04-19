@@ -61,6 +61,7 @@ router.post('/insert', types, (req, res) => {
 
 router.put('/update', types, (req, res) => {
     const body = req.body
+    console.log(body)
     res.setHeader('Content-Type', 'application/json')
     noteRepository.updateNote(body.uid, new Note(
         Number(body.nid),
