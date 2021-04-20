@@ -98,10 +98,10 @@ router.put('/changepassword', upload, (req, res) => {
 router.put('/forgotpassword', upload, (req, res) => {
     const body = req.body
     userRepository.forgotPassword(body.username)
-        .then((code) => {
-            res.sendStatus(code)
+        .then((user) => {
+            res.json(200)
         }).catch((err) => {
-            res.sendStatus(err)
+            res.sendStatus(404)
         })
 })
 

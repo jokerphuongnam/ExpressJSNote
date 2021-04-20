@@ -89,7 +89,7 @@ class FirebaseUtils {
                 return firebase.auth().signOut()
             }).catch((err)=>{
                 console.log(err)
-                resolve(404)
+                reject(404)
             })
         })
     }
