@@ -91,9 +91,10 @@ router.delete('/delete/:uid/:nid', (req, res) => {
     })
 })
 
-router.get('/notes', (req, res) => {
+router.get('/notes/:uid', (req, res) => {
     const query = req.query
-    noteRepository.notes(query.uid, query.start, query.amount).then(notes => {
+    const uid = req.params.uid
+    noteRepository.notes(uid, query.start, query.amount).then(notes => {
         res.json(notes)
     }).catch(errMsg => {
         res.sendStatus(404)
