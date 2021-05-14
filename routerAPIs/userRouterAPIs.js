@@ -55,7 +55,7 @@ router.post('/register', type, (req, res) => {
         body.username,
         body.password,
         body.type,
-        (req.file) ? req.file.filename : undefined,
+        (req.file) ? req.file.filename : null,
         body.fname,
         body.lname,
         body.birthDay
@@ -70,7 +70,7 @@ router.put('/editprofile', type, (req, res) => {
     const body = req.body
     userRepository.editProfile(
         body.uid,
-        (body.avatar) ? body.avatar : (req.file) ? req.file.filename : undefined,
+        (body.avatar) ? body.avatar : (req.file) ? req.file.filename : null,
         (body.avatar!= null || body.avatar != undefined) && (req.file != null || req.file != undefined),
         body.fname,
         body.lname,

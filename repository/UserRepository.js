@@ -16,11 +16,13 @@ function sendToClient(user) {
 }
 
 function deleteImage(imageName) {
-    imageName = path.parse(imageName).base
-    console.log(imageName)
-    fs.unlink(`${path.dirname(__dirname)}/database/images/${imageName}`, (err) => {
-        console.log(err)
-    })
+    if (imageName) {
+        imageName = path.parse(imageName).base
+        console.log(imageName)
+        fs.unlink(`${path.dirname(__dirname)}/database/images/${imageName}`, (err) => {
+            console.log(err)
+        })
+    }
 }
 
 class DefaultUserRepository {
@@ -100,18 +102,16 @@ class DefaultUserRepository {
         return firebaseUtils.forgotPassword(username)
     }
 
-    editProfile(uid, avatar, isDontChangeAvatar , firstName, lastName, birthDay) {
+    editProfile(uid, avatar, isDontChangeAvatar, firstName, lastName, birthDay) {
         return new Promise((resolve, reject) => {
             fs.readFile('./database/users.json', (err, data) => {
                 const users = JSON.parse(`${data}`)
                 const curentUser = users[`${uid}`]
-                if(isDontChangeAvatar){
-                    if (avatar) {
-                        deleteImage(users[`${uid}`].avatar)
-                        users[`${uid}`].avatar = avatar
-                    }
+                if (!isDontChangeAvatar) {
+                    deleteImage(users[`${uid}`].avatar)
+                    users[`${uid}`].avatar = avatar
                 }
-                const user  = users[`${uid}`]
+                const user = users[`${uid}`]
                 user.fname = (firstName) ? firstName : curentUser.fname
                 user.lname = (lastName) ? lastName : curentUser.lname
                 user.birthDay = Number((birthDay) ? birthDay : curentUser.birthDay)

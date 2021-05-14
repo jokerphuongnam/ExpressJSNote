@@ -23,18 +23,23 @@ class Repository{
 }*/
 
 function deleteImage(imageName) {
-    imageName = path.parse(imageName).base
-    console.log(imageName)
-    fs.unlink(`${path.dirname(__dirname)}/database/images/${imageName}`, (err) => {
-        console.log(err)
-    })
+    if (imageName) {
+        console.log(imageName)
+        imageName = path.parse(imageName).base
+        console.log(imageName)
+        fs.unlink(`${path.dirname(__dirname)}/database/images/${imageName}`, (err) => {
+            console.log(err)
+        })
+    }
 }
 
 function deleteSound(soundName) {
-    soundName = path.parse(soundName).base
-    fs.unlink(`${path.dirname(__dirname)}/database/sounds/${soundName}`, (err) => {
-        console.log(err)
-    })
+    if (soundName) {
+        soundName = path.parse(soundName).base
+        fs.unlink(`${path.dirname(__dirname)}/database/sounds/${soundName}`, (err) => {
+            console.log(err)
+        })
+    }
 }
 
 // function openFolder(nid){
@@ -68,7 +73,14 @@ class DefaultNoteRepository {
                     notes = Object.fromEntries(
                         Object.entries(notes).sort(([, a], [, b]) => a.nid - b.nid)
                     )
-                    fs.writeFile(dir, JSON.stringify(notes), err => {
+                    const ordered = Object.keys(notes).sort().reduce(
+                        (obj, key) => {
+                            obj[key] = notes[key];
+                            return obj;
+                        },
+                        {}
+                    )
+                    fs.writeFile(dir, JSON.stringify(ordered), err => {
                         reject(err)
                     })
                 }
@@ -106,8 +118,15 @@ class DefaultNoteRepository {
                         notes = Object.fromEntries(
                             Object.entries(notes).sort(([, a], [, b]) => a.nid - b.nid)
                         )
+                        const ordered = Object.keys(notes).sort().reduce(
+                            (obj, key) => {
+                                obj[key] = notes[key];
+                                return obj;
+                            },
+                            {}
+                        )
                         resolve(note)
-                        fs.writeFile(dir, JSON.stringify(notes), err => {
+                        fs.writeFile(dir, JSON.stringify(ordered), err => {
                             reject(err)
                         })
                     } else {
@@ -142,8 +161,8 @@ class DefaultNoteRepository {
                         }
                         resolve(notes[nid])
                         delete notes[nid]
-                        notes  = Object.fromEntries(
-                            Object.entries(notes).sort(([,a],[,b]) => a.nid-b.nid)
+                        notes = Object.fromEntries(
+                            Object.entries(notes).sort(([, a], [, b]) => a.nid - b.nid)
                         )
                         fs.writeFile(dir, JSON.stringify(notes), err => {
                             reject(err)
